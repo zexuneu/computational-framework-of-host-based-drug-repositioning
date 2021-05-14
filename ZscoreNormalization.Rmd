@@ -1,0 +1,24 @@
+---
+title: "Script 4_z-score_based_normalization"
+author: "Lizexu"
+date: "2021/4/5"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reshape2)
+CPI_DrugBank_CO = read.table(file = "Prediction_results.matrix.txt",header = TRUE)
+```
+
+## R Markdown
+
+```{r cars}
+z_CPI_DrugBank_CO=as.data.frame(scale(CPI_DrugBank_CO))
+z_CPI_DrugBank_CO$drugname = rownames(z_CPI_DrugBank_CO)
+z_CPI_DrugBank_CO_list=melt(as.data.frame(z_CPI_DrugBank_CO),id.vars=c("drugname"),variable.name="Target",value.name="DeepCPI score")
+write.table(z_CPI_DrugBank_CO_list,"z_Prediction_results.txt",sep = "\t",row.names = F)
+
+
+```
+
